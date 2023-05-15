@@ -92,6 +92,10 @@ class Score {
         return score;
     }
 
+    public void resetPoints() {
+        score = 0;
+    }
+
     public int getBuncos() {
         return buncos;
     }
@@ -105,7 +109,7 @@ class Score {
     }
 
     public String toString() {
-        return name + "has" + score + "points";
+        return name + " has " + score + " points";
     }
 
 }

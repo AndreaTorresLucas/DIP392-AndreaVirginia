@@ -14,6 +14,7 @@ public class MainBunco extends JFrame {
     private int numberPlayers = 4;
     private JLabel[] playerLabels;
     private JLabel[] playerScoreDisplay;
+    private JLabel numberRounds;
     private JButton rollDiceButton;
     private JButton menuButton;
     private Player[] players;
@@ -21,6 +22,7 @@ public class MainBunco extends JFrame {
     private RollButtonListener rollButtonListener;
     private int i;
     private int round;
+    private int count;
 
     // Constructor
     public MainBunco() {
@@ -36,7 +38,7 @@ public class MainBunco extends JFrame {
         String[] playerNames = { "Player1", "Player2", "Player3", "Player4" }; // we need the string names
         playerLabels = new JLabel[numberPlayers];
         BoxLayout spacesNames = new BoxLayout(playerPanel, BoxLayout.X_AXIS);
-        Font font = new Font("Bauhaus 93", Font.PLAIN, 24);
+        Font font = new Font("Bauhaus 93", Font.PLAIN, 50);
         playerPanel.setLayout(spacesNames);
         for (int i = 0; i < numberPlayers; i++) {
             playerLabels[i] = new JLabel(playerNames[i]);
@@ -48,7 +50,7 @@ public class MainBunco extends JFrame {
         playerPanel.setBackground(Color.LIGHT_GRAY);
         add(playerPanel, BorderLayout.NORTH);
         // Creación del borde
-        Border border = BorderFactory.createLineBorder(Color.BLACK, 2, true);
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 3, true);
         // Aplicar el borde al panel
         playerPanel.setBorder(border);
 
@@ -68,14 +70,14 @@ public class MainBunco extends JFrame {
 
         // Button of rolling the dice
         rollDiceButton = new JButton("Roll the dice");
-        //rollDiceButton.addActionListener(new RollButtonListener());
+        rollDiceButton.addActionListener(new RollButtonListener());
         Color lightBlue = new Color(173, 216, 230);
         scoresDisplay.setBackground(lightBlue);
         add(scoresDisplay);
         scoresDisplay.add(rollDiceButton);
         
 
-           /*    
+             
         players = new Player[numberPlayers];
         bg = new BuncoGame(players);
           
@@ -87,16 +89,35 @@ public class MainBunco extends JFrame {
         players[2] = p3;
         Player p4 = bg.player("Player4");
         players[3] = p4;
-    
+       
+        JPanel roundplayer = new JPanel();
      
+        numberRounds = new JLabel("Roll the dice to start the game, GOOD LUCK!!");
+        Font font1 = new Font("Bauhaus 93", Font.PLAIN, 50);
+        numberRounds.setFont(font1);
+        roundplayer.add(numberRounds);
+        numberRounds.setHorizontalAlignment(SwingConstants.CENTER);
+        add(roundplayer);
+        count = 0;
         bg.addRound();
+       /*  
+        round = bg.getRound();
+        
+        
         
         int count = 0;
-        round = bg.getRound();
+        i = count % players.length;// i is never going to be bigger than 4, represents the number of the player
+
+        while (round < 7) {
+            System.out.println("Hola");
+            round++;
+        }*/
+        /* 
+        
+        
 
         while (round < 6 + 1) {
-            i = count % players.length; // i is never going to be bigger than 4, represents the number of the player
-                                        // playing and its turns in the game
+    
             String nameActualPlayer = players[i].getName();
             JLabel numberRounds = new JLabel("Round" + round + "           Turn: " + nameActualPlayer);
             System.out.println("Round" + round + "           Turn: " + nameActualPlayer);
@@ -143,15 +164,25 @@ public class MainBunco extends JFrame {
         setVisible(true);
 
         
-        
-
-
-        
     }
 
      private class RollButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Dice diceGame = bg.dice;
+            i = count % players.length;// i is never going to be bigger than 4, represents the number of the player
+            round = bg.getRound();
+            if(round<7){
+                numberRounds.setText("Round: " + round + "           Turn: " + players[i]); 
+                while(players[i].turn(round)){}
+                    if(players[i].roundsWon()){
+                        bg.addRound();
+                        for(int j =0;j<players.length;j++){
+                            players[j].resetPoints();
+                        }
+                    }
+                    count++;
+                    System.out.println(count);
+            }else{numberRounds.setText("END OF GAME");}
+            /*Dice diceGame = bg.dice;
             int[] diceValues = diceGame.rollingDice;
                         
             // Simulación del giro de los dados y actualización de los resultados
@@ -161,7 +192,8 @@ public class MainBunco extends JFrame {
             System.out.print(rollResult);
             // TENEMOS QUE SACAR EL VALOR DEL DADO***********************************
            playerScoreDisplay[j].setText("" + rollResult);     //las 3 labels en el display
-            }
+            } */
+            
             
 
 
