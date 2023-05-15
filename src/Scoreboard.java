@@ -3,7 +3,7 @@ public class Scoreboard {
     Scoreboard(Score[] scoring){this.scoring = scoring;}
     
     String littleBuncoWinner(){
-        int maxbuncos=-1 ;
+        int maxbuncos=-1 ;      //maxbuncos is -1 because of the condition on the if clause
         String info = "LITTLE BUNCO!\n";
         for(int i =0;i<scoring.length;i++){
             if(scoring[i].getBuncos()>maxbuncos){

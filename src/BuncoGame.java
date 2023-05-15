@@ -118,6 +118,7 @@ class Player extends Score {
     int numberOfDice = 3;
     int winningPoints = 21;
     Dice dice;
+    int score1player;
 
     /* constructor */
     Player(Dice dice, String name) {
@@ -143,11 +144,13 @@ class Player extends Score {
 
     private boolean scoreRollingDice(int round) {
         int score = 0;
+        score1player = score;
         boolean littleBunco = true;
         for (int i = 0; i < numberOfDice; i++) {
             if (dice.getDiceRolling(i) == round) {
                 littleBunco = false;
                 score++;
+                score1player = score;
             } else if (i > 0 && dice.getDiceRolling(i) != dice.getDiceRolling(i - 1)) {
                 littleBunco = false;
             }
@@ -155,9 +158,11 @@ class Player extends Score {
         if (score == 3) {
             bigBuncos++;
             score = 5;
+            score1player = score;
         } else if (littleBunco) {
             buncos++;
             score = 3;
+            score1player = score;
         }
         this.score += score;
         this.roundScore += score;
@@ -165,6 +170,10 @@ class Player extends Score {
             this.score += winningPoints - roundScore;
         }
         return (roundScore <= winningPoints && score != 0 && score != 3);
+    }
+
+    public int getScore1Player(){
+        return score1player;
     }
 
     public boolean roundsWon() {
