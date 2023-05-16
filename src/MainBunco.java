@@ -26,6 +26,7 @@ public class MainBunco extends JFrame {
     private int count;
     private JPanel playerPanel;
     private Dice diceGame;
+    ImageIcon[] diceIcons;
 
     // Constructor
     public MainBunco() {
@@ -72,7 +73,7 @@ public class MainBunco extends JFrame {
         // scoresDisplay.setLayout(spaces);
         playerScoreDisplay = new JLabel[4];
         for (int i = 0; i < 3; i++) {
-            playerScoreDisplay[i] = new JLabel("0");
+            playerScoreDisplay[i] = new JLabel("");
             scoresDisplay.add(playerScoreDisplay[i]);
             // scoresDisplay.add(Box.createHorizontalStrut(200));
         }
@@ -81,6 +82,11 @@ public class MainBunco extends JFrame {
         // Button of rolling the dice
         rollDiceButton = new JButton("Roll the dice");
         rollDiceButton.addActionListener(new RollButtonListener());
+        Color darkRed = new Color(139, 0, 0);
+        rollDiceButton.setBackground(Color.BLACK);
+        Font font1 = new Font("Bauhaus 93", Font.PLAIN, 30);
+        rollDiceButton.setFont(font1);
+        rollDiceButton.setForeground(Color.WHITE);
         Color lightBlue = new Color(173, 216, 230);
         scoresDisplay.setBackground(lightBlue);
         add(scoresDisplay);
@@ -101,7 +107,6 @@ public class MainBunco extends JFrame {
         JPanel roundplayer = new JPanel();
 
         numberRounds = new JLabel("Roll the dice to start the game, GOOD LUCK!!");
-        Font font1 = new Font("Bauhaus 93", Font.PLAIN, 50);
         numberRounds.setFont(font1);
         roundplayer.add(numberRounds);
         numberRounds.setHorizontalAlignment(SwingConstants.CENTER);
@@ -116,9 +121,9 @@ public class MainBunco extends JFrame {
         menuButton = new JButton("Menu");
         menuButton.addActionListener(new MenuButtonListener());
         menuPanel.add(menuButton);
-        Color darkRed = new Color(139, 0, 0);
+        darkRed = new Color(139, 0, 0);
         UIManager.put("Button.background", darkRed);
-        UIManager.put("Button.font", new Font("Bauhaus 93", Font.PLAIN, 16));
+        UIManager.put("Button.font", new Font("Bauhaus 93", Font.PLAIN, 30));
 
         // Aplicar el estilo personalizado al botón
         menuButton.setBackground(UIManager.getColor("Button.background"));
@@ -130,6 +135,18 @@ public class MainBunco extends JFrame {
         // for showing the actual display
         pack();
         setVisible(true);
+
+        // Ruta de las imágenes de las caras del dado
+String[] diceImages = { "images/dice1.png", "images/dice2.png", "images/dice3.png", "images/dice4.png", "images/dice5.png", "images/dice6.png"};
+
+// Array para almacenar los iconos de las imágenes
+diceIcons = new ImageIcon[diceImages.length];
+
+// Cargar las imágenes y crear los iconos
+for (int i = 0; i < diceImages.length; i++) {
+    diceIcons[i] = new ImageIcon(getClass().getResource(diceImages[i]));
+}
+
 
     }
 
@@ -166,9 +183,14 @@ public class MainBunco extends JFrame {
                     playerScorePoints[2].setText("Points: " + players[2].getPoints());
                     playerScorePoints[3].setText("Points: " + players[3].getPoints());
                     int[] dataDice = diceGame.rollingDice;
-                    playerScoreDisplay[0].setText("" + dataDice[0]);
-                    playerScoreDisplay[1].setText("" + dataDice[1]);
-                    playerScoreDisplay[2].setText("" + dataDice[2]);
+                    for (int j = 0; j < 3; j++) {
+                        for(int i =1;i<7;i++){
+                           if(dataDice[j]==i){playerScoreDisplay[j].setIcon(diceIcons[i-1]);} 
+                        }
+                        
+                      //playerScoreDisplay[j].setText("" + dataDice[j]);
+                    }
+                    
 
                 }
 
