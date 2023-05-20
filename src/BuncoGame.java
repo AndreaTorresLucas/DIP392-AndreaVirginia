@@ -2,7 +2,6 @@
 Virginia Torres Lucas
 APPLIED COMPUTER SYSTEMS SOFTWARE */
 
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -157,11 +156,11 @@ class Player extends Score {
         }
         if (score == 3) {
             bigBuncos++;
-            score = 5;
+            score = 21;
             score1player = score;
         } else if (littleBunco) {
             buncos++;
-            score = 3;
+            score = 5;
             score1player = score;
         }
         this.score += score;

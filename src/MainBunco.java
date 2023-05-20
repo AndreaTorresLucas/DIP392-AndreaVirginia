@@ -27,6 +27,7 @@ public class MainBunco extends JFrame {
     private JPanel playerPanel;
     private Dice diceGame;
     ImageIcon[] diceIcons;
+    private int[] dataDice;
 
     // Constructor
     public MainBunco() {
@@ -152,7 +153,6 @@ for (int i = 0; i < diceImages.length; i++) {
 
     private class RollButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-
             i = count % players.length;// i is never going to be bigger than 4, represents the number of the player
             round = bg.getRound();
             if (round < 7) {
@@ -163,6 +163,17 @@ for (int i = 0; i < diceImages.length; i++) {
                 }
 
                 if (players[i].roundsWon()) {
+                    playerScorePoints[0].setText("Points: " + players[0].getPoints());
+                    playerScorePoints[1].setText("Points: " + players[1].getPoints());
+                    playerScorePoints[2].setText("Points: " + players[2].getPoints());
+                    playerScorePoints[3].setText("Points: " + players[3].getPoints());
+                    for (int j = 0; j < 3; j++) {
+                        for(int i =1;i<7;i++){
+                           if(dataDice[j]==i){playerScoreDisplay[j].setIcon(diceIcons[i-1]);} 
+                        }
+                        
+                      //playerScoreDisplay[j].setText("" + dataDice[j]);
+                    }
                     numberRounds.setText(players[i].getName() + " has won this round " + round);
                     // numberRounds.setText("Round: " + round + " Turn: " + players[i].getName() + "
                     // Points: " + players[i].getPoints());
@@ -182,7 +193,7 @@ for (int i = 0; i < diceImages.length; i++) {
                     playerScorePoints[1].setText("Points: " + players[1].getPoints());
                     playerScorePoints[2].setText("Points: " + players[2].getPoints());
                     playerScorePoints[3].setText("Points: " + players[3].getPoints());
-                    int[] dataDice = diceGame.rollingDice;
+                    dataDice = diceGame.rollingDice;
                     for (int j = 0; j < 3; j++) {
                         for(int i =1;i<7;i++){
                            if(dataDice[j]==i){playerScoreDisplay[j].setIcon(diceIcons[i-1]);} 
@@ -193,11 +204,9 @@ for (int i = 0; i < diceImages.length; i++) {
                     
 
                 }
-
                 count++;
                 System.out.println(count);
             } else {
-
                 numberRounds.setText("END OF GAME " + players[i].getName() + " has won this round " + round);
             }
 
