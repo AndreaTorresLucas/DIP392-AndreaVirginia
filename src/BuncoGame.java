@@ -168,7 +168,7 @@ class Player extends Score {
         if (roundScore > winningPoints) {
             this.score += winningPoints - roundScore;
         }
-        return (roundScore <= winningPoints && score != 0 && score != 3);
+        return (score != 0 );
     }
 
     public int getScore1Player(){
