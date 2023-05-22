@@ -32,6 +32,8 @@ public class MainBunco extends JFrame {
     private int[] dataDice;
     private ImageIcon iconn;
     private JDialog dialog;
+    private JPanel infoSBPanel;
+    private JPanel inforulesPanel;
     public static MainBunco mainB;
 
     // Constructor
@@ -40,7 +42,7 @@ public class MainBunco extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // personalized icon window
-        iconn = new ImageIcon("DIP392-AndreaVirginia-main/src/images/iconbg.png");
+        iconn = new ImageIcon("src/images/iconbg.png");
 
         // Obtener una instancia de la clase Image
         java.awt.Image imagee = iconn.getImage();
@@ -185,6 +187,12 @@ public class MainBunco extends JFrame {
                         }
 
                     }
+                    if(players[i].getScore1Player()==21){
+                        playSound("/sounds/bigbunco.wav");
+                    }
+                    if(players[i].getScore1Player()==5){
+                        playSound("/sounds/littlebunco.wav");
+                    }
                     playSound("sounds/win.wav");
                     numberRounds
                             .setText("<html><br>" + players[i].getName() + " has won this round " + round + "</html>");
@@ -195,6 +203,9 @@ public class MainBunco extends JFrame {
                 } else {
 
                     int pointsPerPlayer = players[i].getScore1Player();
+                    if(pointsPerPlayer==5){
+                        playSound("/sounds/littlebunco.wav");
+                    }
                     numberRounds.setText("<html><br>Round: " + round
                             + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Turn: "
                             + players[i].getName()
@@ -259,8 +270,7 @@ public class MainBunco extends JFrame {
         dialog.getContentPane().add(button1);
         dialog.getContentPane().add(button2);
         dialog.getContentPane().add(button3);
-
-        dialog.setBackground(Color.YELLOW);
+        dialog.getContentPane().setBackground(Color.black);
         dialog.setVisible(true);
     }
 
@@ -273,8 +283,12 @@ public class MainBunco extends JFrame {
     }
 
     public void infoScoreBoard() {
-        JPanel infoSBPanel = new JPanel(new GridLayout(5, 1));
-        dialog.setSize(900, 200);
+        if (inforulesPanel != null){
+            inforulesPanel.setVisible(false);
+        }
+        infoSBPanel = new JPanel(new GridLayout(5, 1));
+
+        dialog.setSize(1200, 250);
 
         String textInfo1 = bg.printStats();
         JLabel infoSB1 = new JLabel(textInfo1);
@@ -301,6 +315,19 @@ public class MainBunco extends JFrame {
         infoSBPanel.add(infoSB5);
         // dialog.getContentPane().add(infoSB5);
 
+        Font font = new Font("Agency FB", Font.BOLD, 22);
+        infoSB1.setFont(font);
+        infoSB2.setFont(font);
+        infoSB3.setFont(font);
+        infoSB4.setFont(font);
+        infoSB5.setFont(font);
+
+        infoSBPanel.setBackground(Color.black);
+        infoSB1.setForeground(Color.LIGHT_GRAY);
+        infoSB2.setForeground(Color.LIGHT_GRAY);
+        infoSB3.setForeground(Color.LIGHT_GRAY);
+        infoSB4.setForeground(Color.LIGHT_GRAY);
+        infoSB5.setForeground(Color.LIGHT_GRAY);
         dialog.add(infoSBPanel);
         dialog.setVisible(true);
     }
@@ -310,7 +337,7 @@ public class MainBunco extends JFrame {
             playSound("sounds/Menu.wav");
 
             mainB.dispose();
-            new MainBunco();
+            main(null);
 
         }
     }
@@ -318,8 +345,30 @@ public class MainBunco extends JFrame {
     private class RulesButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             playSound("sounds/Menu.wav");
-
+            inforules();
         }
+    }
+
+    public void inforules(){
+        
+        if (infoSBPanel != null){
+            infoSBPanel.setVisible(false);
+        }
+        inforulesPanel = new JPanel(new GridLayout(5, 1));
+        inforulesPanel.setBackground(Color.black);
+
+        dialog.setSize(1300, 525);
+
+        String text1 = "<html>AIM OF THE GAME: Win majority of the rounds by scoring 21 or more points, each player takes turns rolling the dice to score points.<br>HOW TO PLAY: Player1 is selected to go first in 1st ROUND, then turns go in a cyclical way.<br><br>If you are in ROUND 1, roll the dice:<br>You roll 1 # # -> + 1 POINT.<br>You roll 1 1 # -> + 2 POINTS.<br> You roll 1 1 1 -> BUNCO! + 21 POINTS, automatically win the round.<br>You roll THREE-OF-A-KIND that doesn't match the actual ROUND, like 4 4 4 in ROUND 1 -> LITTLE BUNCO! + 5 POINTS.<br><br>You continue rolling the dice as long as you keep scoring points.<br>If you don't roll a number that matches the actual round or is not a three-of-a-kind non-round number, then you forfeit your turn to the next player and you get + 0 POINTS.<BR><BR>GAME WINNER -> MOST ROUNDS WON.<BR>IF A TIE HAPPENS -> PLAYER WITH MOST BUNCOS WINS.<BR>IF IT'S STILL A TIE -> PLAYER WITH GRETEST TOTAL SCORE WINS.</html>";
+        JLabel infoR1 = new JLabel(text1);
+        inforulesPanel.add(infoR1);
+
+        Font font = new Font("Agency FB", Font.BOLD, 22);
+        infoR1.setFont(font);
+        
+        infoR1.setForeground(Color.LIGHT_GRAY);
+        dialog.add(inforulesPanel);
+        dialog.setVisible(true);
     }
 
     private void playSound(String soundFilePath) {
