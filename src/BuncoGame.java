@@ -38,33 +38,42 @@ public class BuncoGame{
         return round;
     }
 
-    /*public void game() {
-        addRound();
-        int i;
-        int count = 0;
-        while (round < 6 + 1) {
-            i = count % players.length; // i is never going to be bigger than 4, represents the number of the player
-                                        // playing and its turns in the game
-            indexActualPlayer = i;
-            while (players[i].turn(round)) {
-            }
-            if (players[i].roundsWon()) {
-
-                System.out.println(sb.printStats());
-
-                addRound();
-            }
-            count++;
-        }
-    }*/
 
     public int getNamePlayer() {
         return indexActualPlayer;
     }
 
     public String toString() {
-        return sb.toString();
+       return sb.toString();
+      // return sb.printStats();
     }
+
+    public String printStats() {
+        return sb.printStats();
+       // return sb.printStats();
+     }
+
+     public String totalScoreWinner() {
+        return sb.totalScoreWinner();
+       // return sb.printStats();
+     }
+
+     public String roundsWinner() {
+        return sb.roundsWinner();
+       // return sb.printStats();
+     }
+
+     public String littleBuncoWinner() {
+        return sb.littleBuncoWinner();
+       // return sb.printStats();
+     }
+
+     
+     public String bigBuncoWinner() {
+        return sb.bigBuncoWinner();
+       // return sb.printStats();
+     }
+
 
     public Player player(String name) {
         return new Player(dice, name);
@@ -83,12 +92,19 @@ class Score {
     int roundsWon;
     int bigBuncos;
 
+    int totalScore;
+    
+
     public String getName() {
         return name;
     }
 
     public int getPoints() {
         return score;
+    }
+
+    public int getTotalPoints(){
+        return totalScore;
     }
 
     public void resetPoints() {
@@ -108,7 +124,7 @@ class Score {
     }
 
     public String toString() {
-        return name + " has " + score + " points";
+        return name + " has " + totalScore + " points";
     }
 
 }
@@ -118,6 +134,7 @@ class Player extends Score {
     int winningPoints = 21;
     Dice dice;
     int score1player;
+    int score1playerTotal;
 
     /* constructor */
     Player(Dice dice, String name) {
@@ -126,6 +143,7 @@ class Player extends Score {
         this.name = name;
 
         score = 0;
+        totalScore = 0;
         buncos = 0;
         bigBuncos = 0;
     }
@@ -143,13 +161,17 @@ class Player extends Score {
 
     private boolean scoreRollingDice(int round) {
         int score = 0;
+        int totalScore = 0;
         score1player = score;
+        score1playerTotal = totalScore;
         boolean littleBunco = true;
         for (int i = 0; i < numberOfDice; i++) {
             if (dice.getDiceRolling(i) == round) {
                 littleBunco = false;
                 score++;
+                totalScore++;
                 score1player = score;
+                score1playerTotal = totalScore;
             } else if (i > 0 && dice.getDiceRolling(i) != dice.getDiceRolling(i - 1)) {
                 littleBunco = false;
             }
@@ -157,16 +179,23 @@ class Player extends Score {
         if (score == 3) {
             bigBuncos++;
             score = 21;
+            totalScore = 21;
             score1player = score;
+            score1playerTotal = totalScore;
         } else if (littleBunco) {
             buncos++;
             score = 5;
+            totalScore = 5;
             score1player = score;
+            score1playerTotal = totalScore;
         }
         this.score += score;
+        this.totalScore += totalScore;
         this.roundScore += score;
+        
         if (roundScore > winningPoints) {
             this.score += winningPoints - roundScore;
+            this.totalScore += winningPoints - roundScore;
         }
         return (score != 0 );
     }
@@ -176,7 +205,7 @@ class Player extends Score {
     }
 
     public boolean roundsWon() {
-        if (roundScore >= winningPoints) {
+        if (roundScore >= + winningPoints) {
             roundsWon++; // you win a round when you get 21 or more points
             return true;
         }

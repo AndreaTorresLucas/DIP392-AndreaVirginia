@@ -28,27 +28,28 @@ public class MainBunco extends JFrame {
     private int count;
     private JPanel playerPanel;
     private Dice diceGame;
-    ImageIcon[] diceIcons;
+    private ImageIcon[] diceIcons;
     private int[] dataDice;
+    private ImageIcon iconn;
+    private JDialog dialog;
+    public static MainBunco mainB;
 
     // Constructor
     public MainBunco() {
         super("BuncoGame");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-                // personalized icon window
-                    ImageIcon iconn = new ImageIcon("images/iconbg.png");
+        // personalized icon window
+        iconn = new ImageIcon("DIP392-AndreaVirginia-main/src/images/iconbg.png");
 
-                    // Obtener una instancia de la clase Image
-                    java.awt.Image imagee = iconn.getImage();
-            
-                    // Establecer el icono personalizado en el JFrame
-                    setIconImage(imagee);
+        // Obtener una instancia de la clase Image
+        java.awt.Image imagee = iconn.getImage();
+
+        // Establecer el icono personalizado en el JFrame
+        setIconImage(imagee);
 
         // setLayout(new BorderLayout());
         setLayout(new GridLayout(4, 1));
-
-            
 
         // Display of the names at the top of the screen
         playerPanel = new JPanel(new GridLayout(2, 4));
@@ -71,7 +72,7 @@ public class MainBunco extends JFrame {
         playerPanel.setBackground(marron);
         add(playerPanel, BorderLayout.NORTH);
         // Creación del borde
-        Border border = BorderFactory.createLineBorder(Color.BLACK, 8,true);
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 8, true);
         // Aplicar el borde al panel
         playerPanel.setBorder(border);
 
@@ -92,8 +93,8 @@ public class MainBunco extends JFrame {
         Font font1 = new Font("Bauhaus 93", Font.PLAIN, 30);
         rollDiceButton.setFont(font1);
         rollDiceButton.setForeground(Color.WHITE);
-        //Color lightBlue = new Color(173, 216, 230);
-        //Color forestGreen = Color.decode("#145A32");
+        // Color lightBlue = new Color(173, 216, 230);
+        // Color forestGreen = Color.decode("#145A32");
         Color forestGreen = Color.decode("#880E4F");
         scoresDisplay.setBackground(forestGreen);
         add(scoresDisplay);
@@ -141,28 +142,27 @@ public class MainBunco extends JFrame {
         menuPanel.setBackground(Color.BLACK);
         add(menuPanel, BorderLayout.SOUTH);
 
-
         // for showing the actual display
         pack();
         setVisible(true);
 
         // Ruta de las imágenes de las caras del dado
-String[] diceImages = { "images/dice1.png", "images/dice2.png", "images/dice3.png", "images/dice4.png", "images/dice5.png", "images/dice6.png"};
+        String[] diceImages = { "images/dice1.png", "images/dice2.png", "images/dice3.png", "images/dice4.png",
+                "images/dice5.png", "images/dice6.png" };
 
-// Array para almacenar los iconos de las imágenes
-diceIcons = new ImageIcon[diceImages.length];
+        // Array para almacenar los iconos de las imágenes
+        diceIcons = new ImageIcon[diceImages.length];
 
-// Cargar las imágenes y crear los iconos
-for (int i = 0; i < diceImages.length; i++) {
-    diceIcons[i] = new ImageIcon(getClass().getResource(diceImages[i]));
-}
-
+        // Cargar las imágenes y crear los iconos
+        for (int i = 0; i < diceImages.length; i++) {
+            diceIcons[i] = new ImageIcon(getClass().getResource(diceImages[i]));
+        }
 
     }
 
     private class RollButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            
+
             i = count % players.length;// i is never going to be bigger than 4, represents the number of the player
             round = bg.getRound();
             if (round < 7) {
@@ -171,19 +171,23 @@ for (int i = 0; i < diceImages.length; i++) {
                     count = count - 1;
                 }
 
-                if (players[i].roundsWon()) {playSound("sounds/Rollingdice.wav");
+                if (players[i].roundsWon()) {
+                    playSound("sounds/Rollingdice.wav");
                     playerScorePoints[0].setText("Points: " + players[0].getPoints());
                     playerScorePoints[1].setText("Points: " + players[1].getPoints());
                     playerScorePoints[2].setText("Points: " + players[2].getPoints());
                     playerScorePoints[3].setText("Points: " + players[3].getPoints());
                     for (int j = 0; j < 3; j++) {
-                        for(int i =1;i<7;i++){
-                           if(dataDice[j]==i){playerScoreDisplay[j].setIcon(diceIcons[i-1]);} 
+                        for (int i = 1; i < 7; i++) {
+                            if (dataDice[j] == i) {
+                                playerScoreDisplay[j].setIcon(diceIcons[i - 1]);
+                            }
                         }
-                      
+
                     }
                     playSound("sounds/win.wav");
-                    numberRounds.setText("<html><br>" +players[i].getName() + " has won this round " + round + "</html>");
+                    numberRounds
+                            .setText("<html><br>" + players[i].getName() + " has won this round " + round + "</html>");
                     bg.addRound();
                     for (int j = 0; j < players.length; j++) {
                         players[j].resetPoints();
@@ -191,8 +195,11 @@ for (int i = 0; i < diceImages.length; i++) {
                 } else {
 
                     int pointsPerPlayer = players[i].getScore1Player();
-                    numberRounds.setText("<html><br>Round: " + round + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Turn: " + players[i].getName()
-                            + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scored points: " + pointsPerPlayer+"</html>");
+                    numberRounds.setText("<html><br>Round: " + round
+                            + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Turn: "
+                            + players[i].getName()
+                            + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scored points: "
+                            + pointsPerPlayer + "</html>");
                     playSound("sounds/Rollingdice.wav");
                     playerScorePoints[0].setText("Points: " + players[0].getPoints());
                     playerScorePoints[1].setText("Points: " + players[1].getPoints());
@@ -200,12 +207,13 @@ for (int i = 0; i < diceImages.length; i++) {
                     playerScorePoints[3].setText("Points: " + players[3].getPoints());
                     dataDice = diceGame.rollingDice;
                     for (int j = 0; j < 3; j++) {
-                        for(int i =1;i<7;i++){
-                           if(dataDice[j]==i){playerScoreDisplay[j].setIcon(diceIcons[i-1]);} 
+                        for (int i = 1; i < 7; i++) {
+                            if (dataDice[j] == i) {
+                                playerScoreDisplay[j].setIcon(diceIcons[i - 1]);
+                            }
                         }
-                        
+
                     }
-                    
 
                 }
                 count++;
@@ -222,17 +230,102 @@ for (int i = 0; i < diceImages.length; i++) {
     private class MenuButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             playSound("sounds/Menu.wav");
+
             // Lógica para mostrar el menú con los botones new game, scoreboard y rules
             // Aquí puedes implementar la lógica para mostrar las vistas correspondientes a
             // cada opción del menú
-            JOptionPane.showMessageDialog(null, "Menu options: new game, scoreboard, rules");
+            // JOptionPane.showMessageDialog(null, "Menu options: new game, scoreboard,
+            // rules", "Menu",JOptionPane.INFORMATION_MESSAGE);
+            showMenuInfo();
         }
     }
 
+    private void showMenuInfo() {
+        dialog = new JDialog(this, "Menu", true);
+        dialog.setSize(600, 100);
+        dialog.setLocationRelativeTo(null);
 
-     private void playSound(String soundFilePath) {
+        JButton button1 = new JButton("Score Board");
+        button1.setForeground(Color.WHITE);
+        button1.addActionListener(new ScoreBoardButtonListener());
+        JButton button2 = new JButton("New Game");
+        button2.addActionListener(new NewGameButtonListener());
+        button2.setForeground(Color.WHITE);
+        JButton button3 = new JButton("Rules");
+        button3.addActionListener(new RulesButtonListener());
+        button3.setForeground(Color.WHITE);
+
+        dialog.getContentPane().setLayout(new FlowLayout());
+        dialog.getContentPane().add(button1);
+        dialog.getContentPane().add(button2);
+        dialog.getContentPane().add(button3);
+
+        dialog.setBackground(Color.YELLOW);
+        dialog.setVisible(true);
+    }
+
+    private class ScoreBoardButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            playSound("sounds/Menu.wav");
+            infoScoreBoard();
+
+        }
+    }
+
+    public void infoScoreBoard() {
+        JPanel infoSBPanel = new JPanel(new GridLayout(5, 1));
+        dialog.setSize(900, 200);
+
+        String textInfo1 = bg.printStats();
+        JLabel infoSB1 = new JLabel(textInfo1);
+        infoSBPanel.add(infoSB1);
+        // dialog.getContentPane().add(infoSB1);
+
+        String textInfo2 = bg.totalScoreWinner();
+        JLabel infoSB2 = new JLabel(textInfo2);
+        infoSBPanel.add(infoSB2);
+        // dialog.getContentPane().add(infoSB2);
+
+        String textInfo3 = bg.roundsWinner();
+        JLabel infoSB3 = new JLabel(textInfo3);
+        infoSBPanel.add(infoSB3);
+        // dialog.getContentPane().add(infoSB3);
+
+        String textInfo4 = bg.littleBuncoWinner();
+        JLabel infoSB4 = new JLabel(textInfo4);
+        infoSBPanel.add(infoSB4);
+        // dialog.getContentPane().add(infoSB4);
+
+        String textInfo5 = bg.bigBuncoWinner();
+        JLabel infoSB5 = new JLabel(textInfo5);
+        infoSBPanel.add(infoSB5);
+        // dialog.getContentPane().add(infoSB5);
+
+        dialog.add(infoSBPanel);
+        dialog.setVisible(true);
+    }
+
+    private class NewGameButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            playSound("sounds/Menu.wav");
+
+            mainB.dispose();
+            new MainBunco();
+
+        }
+    }
+
+    private class RulesButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            playSound("sounds/Menu.wav");
+
+        }
+    }
+
+    private void playSound(String soundFilePath) {
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(MainBunco.class.getResource(soundFilePath));
+            AudioInputStream audioInputStream = AudioSystem
+                    .getAudioInputStream(MainBunco.class.getResource(soundFilePath));
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
@@ -244,7 +337,7 @@ for (int i = 0; i < diceImages.length; i++) {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new MainBunco();
+                mainB = new MainBunco();
             }
         });
     }
