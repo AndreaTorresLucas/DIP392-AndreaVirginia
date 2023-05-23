@@ -38,49 +38,31 @@ public class BuncoGame{
         return round;
     }
 
-
-    public int getNamePlayer() {
-        return indexActualPlayer;
-    }
-
-    public String toString() {
-       return sb.toString();
-      // return sb.printStats();
-    }
-
     public String printStats() {
         return sb.printStats();
-       // return sb.printStats();
      }
 
      public String totalScoreWinner() {
         return sb.totalScoreWinner();
-       // return sb.printStats();
      }
 
      public String roundsWinner() {
         return sb.roundsWinner();
-       // return sb.printStats();
      }
 
      public String littleBuncoWinner() {
         return sb.littleBuncoWinner();
-       // return sb.printStats();
      }
 
      
      public String bigBuncoWinner() {
         return sb.bigBuncoWinner();
-       // return sb.printStats();
      }
 
 
     public Player player(String name) {
         return new Player(dice, name);
     }
-
- 
-
     
 }
 
@@ -91,10 +73,8 @@ class Score {
     int buncos;
     int roundsWon;
     int bigBuncos;
-
     int totalScore;
     
-
     public String getName() {
         return name;
     }

@@ -44,13 +44,11 @@ public class MainBunco extends JFrame {
         // personalized icon window
         iconn = new ImageIcon("src/images/iconbg.png");
 
-        // Obtener una instancia de la clase Image
+        //obtain instance of class Image
         java.awt.Image imagee = iconn.getImage();
 
-        // Establecer el icono personalizado en el JFrame
+        // set personalized icon in the JFrame
         setIconImage(imagee);
-
-        // setLayout(new BorderLayout());
         setLayout(new GridLayout(4, 1));
 
         // Display of the names at the top of the screen
@@ -62,7 +60,7 @@ public class MainBunco extends JFrame {
             playerLabels[i] = new JLabel(playerNames[i]);
 
             playerPanel.add(playerLabels[i]);
-            playerLabels[i].setFont(font); // Configuración del texto
+            playerLabels[i].setFont(font); // text configutarion in the label
         }
         playerScorePoints = new JLabel[4];
         for (int i = 0; i < 4; i++) {
@@ -73,9 +71,9 @@ public class MainBunco extends JFrame {
         Color marron = Color.decode("#ECEFF1");
         playerPanel.setBackground(marron);
         add(playerPanel, BorderLayout.NORTH);
-        // Creación del borde
+        // creation of a border
         Border border = BorderFactory.createLineBorder(Color.BLACK, 8, true);
-        // Aplicar el borde al panel
+        // apply border to panel
         playerPanel.setBorder(border);
 
         // Display of the points
@@ -127,7 +125,7 @@ public class MainBunco extends JFrame {
         diceGame = bg.dice;
         bg.addRound();
 
-        // Panel para el botón del menú
+        // panel for menu button
         JPanel menuPanel = new JPanel();
 
         menuButton = new JButton("Menu");
@@ -137,7 +135,7 @@ public class MainBunco extends JFrame {
         UIManager.put("Button.background", darkRed);
         UIManager.put("Button.font", new Font("Bauhaus 93", Font.PLAIN, 30));
 
-        // Aplicar el estilo personalizado al botón
+        // personalized style to button
         menuButton.setBackground(UIManager.getColor("Button.background"));
         menuButton.setFont(UIManager.getFont("Button.font"));
         menuButton.setForeground(Color.WHITE);
@@ -148,14 +146,14 @@ public class MainBunco extends JFrame {
         pack();
         setVisible(true);
 
-        // Ruta de las imágenes de las caras del dado
+        // directory path for the images of the dice sides
         String[] diceImages = { "images/dice1.png", "images/dice2.png", "images/dice3.png", "images/dice4.png",
                 "images/dice5.png", "images/dice6.png" };
 
-        // Array para almacenar los iconos de las imágenes
+        // Array to store icons of the images
         diceIcons = new ImageIcon[diceImages.length];
 
-        // Cargar las imágenes y crear los iconos
+        // create icons
         for (int i = 0; i < diceImages.length; i++) {
             diceIcons[i] = new ImageIcon(getClass().getResource(diceImages[i]));
         }
@@ -237,16 +235,11 @@ public class MainBunco extends JFrame {
         }
     }
 
-    // ActionListener para el botón Menu
+    // ActionListener for menu button
     private class MenuButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             playSound("sounds/Menu.wav");
-
-            // Lógica para mostrar el menú con los botones new game, scoreboard y rules
-            // Aquí puedes implementar la lógica para mostrar las vistas correspondientes a
-            // cada opción del menú
-            // JOptionPane.showMessageDialog(null, "Menu options: new game, scoreboard,
-            // rules", "Menu",JOptionPane.INFORMATION_MESSAGE);
+            // logic to show menu with scoreboard, new game, rules buttons
             showMenuInfo();
         }
     }
@@ -278,7 +271,6 @@ public class MainBunco extends JFrame {
         public void actionPerformed(ActionEvent e) {
             playSound("sounds/Menu.wav");
             infoScoreBoard();
-
         }
     }
 
@@ -293,27 +285,22 @@ public class MainBunco extends JFrame {
         String textInfo1 = bg.printStats();
         JLabel infoSB1 = new JLabel(textInfo1);
         infoSBPanel.add(infoSB1);
-        // dialog.getContentPane().add(infoSB1);
 
         String textInfo2 = bg.totalScoreWinner();
         JLabel infoSB2 = new JLabel(textInfo2);
         infoSBPanel.add(infoSB2);
-        // dialog.getContentPane().add(infoSB2);
 
         String textInfo3 = bg.roundsWinner();
         JLabel infoSB3 = new JLabel(textInfo3);
         infoSBPanel.add(infoSB3);
-        // dialog.getContentPane().add(infoSB3);
 
         String textInfo4 = bg.littleBuncoWinner();
         JLabel infoSB4 = new JLabel(textInfo4);
         infoSBPanel.add(infoSB4);
-        // dialog.getContentPane().add(infoSB4);
 
         String textInfo5 = bg.bigBuncoWinner();
         JLabel infoSB5 = new JLabel(textInfo5);
         infoSBPanel.add(infoSB5);
-        // dialog.getContentPane().add(infoSB5);
 
         Font font = new Font("Agency FB", Font.BOLD, 22);
         infoSB1.setFont(font);

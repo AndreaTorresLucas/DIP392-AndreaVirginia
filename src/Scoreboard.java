@@ -74,10 +74,4 @@ public class Scoreboard {
         }
         return total+"\n";
     }
-    public String toString(){
-        String total = printStats() + totalScoreWinner() + roundsWinner() + littleBuncoWinner() + bigBuncoWinner();
-        //String total = totalScoreWinner() + "\n" + roundsWinner() + "\n" + littleBuncoWinner() + "\n" + bigBuncoWinner() + "\n";
-        //String total = totalScoreWinner();
-        return total;  
-    }
 }

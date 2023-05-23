@@ -8,11 +8,9 @@ public class Dice {
         rollingDice[2] = (int) ((Math.random()*6))+1;
     }
     public int getDiceRolling(int i){
-        if(i<0 || i >2){
-            throw new RuntimeException("Index not allowed");
-        }
         return rollingDice[i];
     }
+    
     public String toString() {
         return "Roll: [ " + rollingDice[0] + " " 
             + rollingDice[1] + " " + rollingDice[2] + " ]";
